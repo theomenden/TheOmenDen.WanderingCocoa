@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "org.theomenden.wandering_cocoa.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

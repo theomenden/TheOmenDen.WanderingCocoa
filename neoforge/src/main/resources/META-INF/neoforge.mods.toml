@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "wandering_cocoa"
+version = "${version}"
+displayName = "Wandering Cocoa"
+authors = "Alu"
+description = '''
+A small mod for adding cocoa to the Wandering Trader's list of trades
+'''
+#logoFile = ""
+
+[[dependencies.wandering_cocoa]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wandering_cocoa]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.wandering_cocoa]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.6,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "wandering_cocoa.mixins.json"

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "wandering_cocoa",
+  "version": "${version}",
+  "name": "Wandering Cocoa",
+  "description": "A small mod for adding cocoa to the Wandering Trader's list of trades",
+  "authors": [
+    "Andy Beers (Alu)"
+  ],
+  "contact": {
+    "homepage": "https://theomenden.app"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.theomenden.wandering_cocoa.fabric.Wandering_cocoaFabric"
+    ],
+    "client": [
+      "org.theomenden.wandering_cocoa.fabric.client.Wandering_cocoaFabricClient"
+    ],
+    "modmenu": [
+      "org.theomenden.wandering_cocoa.fabric.client.ModMenuCompat"
+    ]
+  },
+  "mixins": [
+    "wandering_cocoa.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/GWshtCqEx4"
+      },
+      "update_checker": true
+    }
+  },
+  "depends": {
+    "fabricloader": ">=0.16.3",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.6",
+    "cloth-config": ">=15.0.130",
+    "fabric-api": "*"
+  }
+}

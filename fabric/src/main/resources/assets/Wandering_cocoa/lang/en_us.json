@@ -1,0 +1,10 @@
+{
+  "config.wandering_cocoa.option.costForCocoaBeansInEmeralds": "Emeralds to Cocoa Beans",
+  "config.wandering_cocoa.option.costForCocoaBeansInEmeralds.@Tooltip": "How much should Cocoa Beans cost in Emeralds (default is 1-3)",
+  "config.wandering_cocoa.option.costForBrownDyeInCocoaBeans": "Cocoa Beans to Brown Dye",
+  "config.wandering_cocoa.option.costForBrownDyeInCocoaBeans.@Tooltip": "How many Cocoa beans should trade into brown dye? (default is 1-3)",
+  "config.wandering_cocoa.option.payoutForBrownDyeTrade": "Brown Dye To Emeralds",
+  "config.wandering_cocoa.option.payoutForBrownDyeTrade.@Tooltip": "How much Brown Dye should you get for emeralds? (default is 1-5)",
+  "config.wandering_cocoa.option.experiencePointsToRewardForTrade": "Trade Exp",
+  "config.wandering_cocoa.title": "Wandering Cocoa"
+}
