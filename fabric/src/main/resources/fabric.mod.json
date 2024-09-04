@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "wandering_cocoa",
+  "id": "wanderingcocoa",
   "version": "${version}",
   "name": "Wandering Cocoa",
   "description": "A small mod for adding cocoa to the Wandering Trader's list of trades",
@@ -15,17 +15,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "org.theomenden.wandering_cocoa.fabric.Wandering_cocoaFabric"
-    ],
-    "client": [
-      "org.theomenden.wandering_cocoa.fabric.client.Wandering_cocoaFabricClient"
-    ],
-    "modmenu": [
-      "org.theomenden.wandering_cocoa.fabric.client.ModMenuCompat"
+      "org.theomenden.wanderingcocoa.fabric.WanderingCocoaFabric"
     ]
   },
   "mixins": [
-    "wandering_cocoa.mixins.json"
+    "wanderingcocoa.mixins.json"
   ],
   "custom": {
     "modmenu": {
@@ -36,11 +30,10 @@
     }
   },
   "depends": {
-    "fabricloader": ">=0.16.3",
-    "minecraft": "~1.21.1",
+    "minecraft": ">=${minecraft_version}",
     "java": ">=21",
-    "architectury": ">=13.0.6",
-    "cloth-config": ">=15.0.130",
-    "fabric-api": "*"
+    "architectury": ">=${architectury_version}",
+    "fabric": ">=${fabric_api_version}",
+    "jamlib": ">=${jamlib_version}"
   }
 }

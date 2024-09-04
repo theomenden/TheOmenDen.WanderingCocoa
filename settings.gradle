@@ -10,8 +10,14 @@ pluginManagement {
             url = "https://maven.fabricmc.net/"
         }
 
-        maven { url "https://files.minecraftforge.net/maven/" }
-        maven { url "https://maven.neforged.net/releases" }
+        maven {
+            name = "Forge"
+            url = "https://files.minecraftforge.net/maven/"
+        }
+        maven {
+            name ="NeoForge"
+            url = "https://maven.neforged.net/releases"
+        }
         maven {
             name = "Jamalam's Maven"
             url = "https://maven.jamalam.tech/releases"
@@ -32,8 +38,7 @@ dependencyResolutionManagement {
     }
 }
 
-
-rootProject.name = 'wandering_cocoa'
+rootProject.name = "wanderingcocoa"
 
 include("common")
 include("fabric")

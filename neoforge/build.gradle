@@ -1,5 +1,6 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version "8.1.+"
+    id "me.shedaniel.unified-publishing" version "0.1.+"
 }
 
 architectury {
@@ -7,14 +8,12 @@ architectury {
     neoForge()
 }
 
+base {
+    archivesName = "wanderingcocoa-neoforge"
+}
+
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    mods {
-        neoForge {
-            sourceSet project(":neoforge").sourceSets.main
-        }
-    }
 }
 
 configurations {
@@ -33,24 +32,34 @@ repositories {
     maven { url "https://www.cursemaven.com"}
 }
 
-
-
 dependencies {
     neoForge libs.neoforge
     modImplementation libs.architectury.neoforge
+    modImplementation libs.jamlib.neoforge
     forgeRuntimeLibrary libs.jankson
 
-    implementation project(path: ":neoforge", configuration: "namedElements")
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive false }
 }
 
-processResources {
-    inputs.property 'version', project.version
-
-    filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version
+publishing {
+    publications {
+        mavenNeoForge(MavenPublication) {
+            artifactId = rootProject.archivesBaseName + "-neoforge"
+            from components.java
+        }
     }
+}
+
+processResources {
+    filesMatching("mods.toml") {
+        expand "minecraft_version": project.minecraft_version,
+               "architectury_version": libs.versions.architectury.get(),
+               "jamlib_version": libs.versions.jamlib.get()
+    }
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "architectury_version", libs.versions.architectury.get()
+    inputs.property "jamlib_version", libs.versions.jamlib.get()
 }
 
 shadowJar {
@@ -65,6 +74,13 @@ remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
 }
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map {zipTree(it)}
+}
+
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()

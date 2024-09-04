@@ -1,5 +1,5 @@
 architectury {
-    common(["fabric", "neoforge"])
+    common(rootProject.enabled_platforms.split(","))
 }
 
 dependencies {
@@ -7,5 +7,6 @@ dependencies {
     // which get remapped to the correct annotations on each platform.
     // Do NOT use other classes from Fabric Loader.
     modImplementation libs.fabric.loader
-    implementation project(path: ":common", configuration: "namedElements")
+    modImplementation libs.architectury.common
+    modImplementation libs.jamlib.common
 }

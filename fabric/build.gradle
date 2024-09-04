@@ -1,11 +1,17 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "8.1.+"
+    id "me.shedaniel.unified-publishing" version "0.1.+"
 }
 
 architectury {
     platformSetupLoomIde()
     fabric()
 }
+
+base {
+    archivesName = "wanderingcocoa-fabric"
+}
+
 configurations {
     common
     shadowCommon
@@ -17,9 +23,10 @@ configurations {
 dependencies {
     modImplementation libs.fabric.loader
     modImplementation libs.fabric.api
+    modImplementation libs.architectury.fabric
+    modImplementation libs.jamlib.fabric
     modRuntimeOnly libs.modmenu
 
-    implementation project(path: ":fabric", configuration: "namedElements")
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
@@ -28,8 +35,18 @@ processResources {
     inputs.property 'version', project.version
 
     filesMatching('fabric.mod.json') {
-        expand version: project.version
+        expand "version": project.version,
+               "minecraft_version": project.minecraft_version,
+               "fabric_api_version": libs.versions.fabric.api.get(),
+               "architectury_version": libs.versions.architectury.get(),
+               "jamlib_version": libs.versions.jamlib.get()
     }
+
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "fabric_api_version", libs.versions.fabric.api.get()
+    inputs.property "architectury_version", libs.versions.architectury.get()
+    inputs.property "jamlib_version", libs.versions.jamlib.get()
 }
 
 shadowJar {
@@ -43,6 +60,12 @@ remapJar {
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map {zipTree(it)}
 }
 
 components.java {

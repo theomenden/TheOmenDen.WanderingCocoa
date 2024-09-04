@@ -19,7 +19,7 @@ modmenu = "11.0.1"
 jankson = "1.2.3"
 
 # https://github.com/JamCoreModding/jamlib
-jamlib="1.0.11"
+jamlib="1.0.11+1.21"
 
 [libraries]
 architectury-common = { module = "dev.architectury:architectury", version.ref = "architectury" }
@@ -37,4 +37,4 @@ jankson = { module = "blue.endless:jankson", version.ref = "jankson" }
 jamlib-common = { module = "io.github.jamalam360:jamlib", version.ref = "jamlib" }
 jamlib-fabric = { module = "io.github.jamalam360:jamlib-fabric", version.ref = "jamlib" }
 jamlib-quilt = { module = "io.github.jamalam360:jamlib-quilt", version.ref = "jamlib" }
-jamlib-forge = { module = "io.github.jamalam360:jamlib-neoforge", version.ref = "jamlib" }
+jamlib-neoforge = { module = "io.github.jamalam360:jamlib-neoforge", version.ref = "jamlib" }
