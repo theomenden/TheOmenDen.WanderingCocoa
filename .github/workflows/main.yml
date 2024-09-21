@@ -24,7 +24,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Build
         run: ./gradlew clean neoforge:build fabric:build
