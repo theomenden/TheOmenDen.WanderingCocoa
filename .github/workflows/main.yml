@@ -18,16 +18,39 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+      - name: Cache
+        uses: actions/cache@v4.0.2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/gradle-wrapper.properties') }}-${{ hashFiles('./gradle.properties') }}-${{ hashFiles('./libs.versions.toml') }}
+          restore-keys: gradle
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v3
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build
         run: ./gradlew clean neoforge:build fabric:build
+
+      - name: Capture Fabric Build Artifacts
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: Fabric Artifacts
+          path: fabric/build/libs/
+
+      - name: Capture NeoForge Build Artifacts
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: NeoForge Artifacts
+          path: neoforge/build/libs/
 
       - name: mc-publish
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -37,3 +60,6 @@ jobs:
           curseforge-id: 1096906
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+            neoforge/build/libs/*-@(dev|sources|javadocs).jar
