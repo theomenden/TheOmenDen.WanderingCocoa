@@ -1,0 +1,39 @@
+name: main.yml
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Build
+        run: ./gradlew clean neoforge:build fabric:build
+
+      - name: mc-publish
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          modrinth-id: n6THt0cM
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: 1096906
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

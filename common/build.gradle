@@ -10,3 +10,11 @@ dependencies {
     modImplementation libs.architectury.common
     modImplementation libs.jamlib.common
 }
+publishing {
+    publications {
+        mavenCommon(MavenPublication) {
+            artifactId = rootProject.archivesBaseName
+            from components.java
+        }
+    }
+}

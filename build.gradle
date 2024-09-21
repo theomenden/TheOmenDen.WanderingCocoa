@@ -2,7 +2,25 @@ plugins {
     id 'dev.architectury.loom' version '1.7.+' apply false
     id 'architectury-plugin' version '3.4.+'
     id 'com.github.johnrengelman.shadow' version '8.1.+' apply false
+    id "me.shedaniel.unified-publishing" version "0.1.+" apply false
+    id "com.github.breadmoirai.github-release" version "2.4.1"
     id "maven-publish"
+}
+
+if (System.getenv("GITHUB_TOKEN") != null) {
+    githubRelease {
+        token(System.getenv("GITHUB_TOKEN"))
+        owner('TheOmenDen')
+        repo("wanderingcocoa")
+        tagName("${project.version}")
+        releaseName("V${project.version}")
+        body(project.rootProject.file("CHANGELOG.md").text)
+        draft(false)
+
+        if (project.branch != null) {
+            targetCommitish(project.branch)
+        }
+    }
 }
 
 architectury {
@@ -48,12 +66,12 @@ allprojects {
         }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
         options.release = 21
     }
 
-    tasks.create("prepareWorkspace") {}
+    tasks.register("prepareWorkspace") {}
 
     java {
         withSourcesJar()
@@ -92,7 +110,7 @@ subprojects {
 
 tasks.publish {
     dependsOn("clean")
-    dependsOn("githubRelease")
+    dependsOn(":githubRelease")
     dependsOn("fabric:publishedUnified")
     dependsOn("neoforge:publishUnified")
 }
