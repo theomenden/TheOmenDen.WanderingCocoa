@@ -52,14 +52,36 @@ jobs:
           name: NeoForge Artifacts
           path: neoforge/build/libs/
 
-      - name: mc-publish
+      - name: Upload artifacts to Modrinth/CurseForge for NeoForge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
-          modrinth-id: n6THt0cM
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: 1096906
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: |
+            neoforge/build/libs/!(*-@(dev|sources|all|javadoc)).jar
+            neoforge/build/libs/*-@(dev|sources|javadoc).jar
+          modrinth-id: n6THt0cM
+          curseforge-id: 1096906
+          modrinth-featured: false
+          loaders: neoforge
+
+      - name: Upload artifacts to Modrinth/CurseForge for Fabric & Quilt
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: |
+            fabric/build/libs/!(*-@(dev|sources|all|javadoc)).jar
+            fabric/build/libs/*-@(dev|sources|javadoc).jar
+          modrinth-id: n6THt0cM
+          curseforge-id: 1096906
+          modrinth-featured: false
+          loaders: fabric
+
+      - name: Upload artifacts to GitHub
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
-           neoforge/build/libs/!(*-@(dev|sources|javadocs)).jar
+            fabric/build/libs/!(*-@(dev|sources|all|javadoc)).jar
+            neoforge/build/libs/!(*-@(dev|sources|all|javadoc)).jar
