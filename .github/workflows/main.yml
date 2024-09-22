@@ -29,10 +29,10 @@ jobs:
           restore-keys: gradle
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v3
+        uses: gradle/actions/wrapper-validation@v4
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -64,8 +64,10 @@ jobs:
           curseforge-id: 1096906
           modrinth-featured: false
           loaders: neoforge
+          game-versions: |
+            >= 1.21.1
 
-      - name: Upload artifacts to Modrinth/CurseForge for Fabric & Quilt
+      - name: Upload artifacts to Modrinth/CurseForge for Fabric
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -77,6 +79,8 @@ jobs:
           curseforge-id: 1096906
           modrinth-featured: false
           loaders: fabric
+          game-versions: |
+            >= 1.21.1
 
       - name: Upload artifacts to GitHub
         uses: Kir-Antipov/mc-publish@v3.3.0
