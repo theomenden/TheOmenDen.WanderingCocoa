@@ -65,7 +65,7 @@ jobs:
           modrinth-featured: false
           loaders: neoforge
           game-versions: |
-            >= 1.21.1
+            >=1.21.1
 
       - name: Upload artifacts to Modrinth/CurseForge for Fabric
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -80,7 +80,7 @@ jobs:
           modrinth-featured: false
           loaders: fabric
           game-versions: |
-            >= 1.21.1
+            >=1.21.1
 
       - name: Upload artifacts to GitHub
         uses: Kir-Antipov/mc-publish@v3.3.0
