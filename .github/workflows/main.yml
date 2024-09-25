@@ -26,7 +26,7 @@ env:
   VERSION_TITLE: "${{inputs.mc_version}}+${{inputs.mod_version}}-${{inputs.version_type}}"
 
 jobs:
-  build:
+  gradle:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -76,21 +76,24 @@ jobs:
       - name: Upload artifacts to Modrinth/CurseForge for NeoForge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
+          name: "NeoForge ${{ENV.VERSION_TITLE}}"
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: |
-            neoforge/build/libs/!(*-@(dev|sources|all|javadoc)).jar
+            neoforge/build/libs/!(*-@(dev|sources|all|javadoc|shadow)).jar
             neoforge/build/libs/*-@(dev|sources|javadoc).jar
           modrinth-id: n6THt0cM
           curseforge-id: 1096906
           modrinth-featured: false
+          version-type: ${{ inputs.version_type }}
+          version: "neoforge-${{inputs.mod_version}}"
           loaders: neoforge
           game-versions: |
             >=1.21.1
-
       - name: Upload artifacts to Modrinth/CurseForge for Fabric
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
+          name: "Fabric ${{ENV.VERSION_TITLE}}"
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: |
@@ -99,14 +102,38 @@ jobs:
           modrinth-id: n6THt0cM
           curseforge-id: 1096906
           modrinth-featured: false
+          version-type: ${{ inputs.version_type }}
+          version: "fabric-${{inputs.mod_version}}"
           loaders: fabric
           game-versions: |
             >=1.21.1
-
       - name: Upload artifacts to GitHub
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
+          name: "Complete ${{ENV.VERSION_TITLE}}"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: |
+            fabric/build/libs/!(*-@(dev|sources|all|javadoc|shadow)).jar
+            neoforge/build/libs/!(*-@(dev|sources|all|javadoc|shadow)).jar
             fabric/build/libs/*-@(dev|sources|javadoc).jar
             neoforge/build/libs/*-@(dev|sources|javadoc).jar
+  close_issues:
+    runs-on: ubuntu-latest
+    needs: gradle
+    permissions:
+      contents: write
+      issues: write
+      deployments: write
+    steps:
+      - name: Close Stale Issues
+        uses: actions/stale@v9.0.0
+        with:
+    # Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+    # The message to post on the issue when closing it. If none provided, will not comment when closing an issue.
+          close-issue-message: completed #"Closed by ${{ github.repository_owner }} via ${{ github.workflow }} with id: ${{ github.run_id }}"
+    # The message to post on the pull request when closing it. If none provided, will not comment when closing a pull requests.
+          close-pr-message: completed #"Closed by ${{ github.repository_owner }} via ${{ github.workflow }} with id: ${{ github.run_id }}"
+    # The reason to use when closing an issue.
+          close-issue-reason: completed #"Closed as a result of ${{ github.workflow }} with id: ${{ github.run_id }}"
+          exempt-issue-labels: "renovate"
