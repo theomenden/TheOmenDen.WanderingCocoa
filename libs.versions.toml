@@ -9,8 +9,8 @@ parchment = "2024.07.28"
 neoforge = "21.1.61"
 
 # https://fabricmc.net/develop
-fabric-loader = "0.16.3"
-fabric-api = "0.103.0+1.21.1"
+fabric-loader = "0.16.5"
+fabric-api = "0.105.0+1.21.1"
 
 # https://modrinth.com/mod/modmenu/versions
 modmenu = "11.0.2"

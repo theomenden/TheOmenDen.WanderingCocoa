@@ -27,13 +27,22 @@
         "modmenu.discord": "https://discord.gg/GWshtCqEx4"
       },
       "update_checker": true
+    },
+    "mc-publish":{
+      "modrinth": "n6THt0cM",
+      "curseforge": "1096906",
+      "dependencies":[
+        "fabric-api@(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)",
+        "architectury@(required){modrinth:lhGA9TYQ}{curseforge:419699}#(ignore:github)",
+        "jamlib@(required){modrinth:IYY9Siz8}{curseforge:623764}#(ignore:github)"
+      ]
     }
   },
   "depends": {
     "minecraft": ">=${minecraft_version}",
     "java": ">=21",
     "architectury": ">=${architectury_version}",
-    "fabric": ">=${fabric_api_version}",
+    "fabric-api": ">=${fabric_api_version}",
     "jamlib": ">=${jamlib_version}"
   }
 }

@@ -43,3 +43,12 @@ side = "BOTH"
 
 [[mixins]]
 config = "wanderingcocoa.mixins.json"
+
+[mc-publish]
+modrinth="n6THt0cM"
+curseforge=1096906
+dependencies=[
+"fabric-api@(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)",
+"architectury@(required){modrinth:lhGA9TYQ}{curseforge:419699}#(ignore:github)",
+"jamlib@(required){modrinth:IYY9Siz8}{curseforge:623764}#(ignore:github)"
+]
