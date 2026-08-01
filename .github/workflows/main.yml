@@ -74,7 +74,7 @@ jobs:
           path: neoforge/build/libs/
 
       - name: Upload artifacts to Modrinth/CurseForge for NeoForge
-        uses: Kir-Antipov/mc-publish@v3.3.0
+        uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           name: "NeoForge ${{ENV.VERSION_TITLE}}"
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -91,7 +91,7 @@ jobs:
           game-versions: |
             >=1.21.1
       - name: Upload artifacts to Modrinth/CurseForge for Fabric
-        uses: Kir-Antipov/mc-publish@v3.3.0
+        uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           name: "Fabric ${{ENV.VERSION_TITLE}}"
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -108,7 +108,7 @@ jobs:
           game-versions: |
             >=1.21.1
       - name: Upload artifacts to GitHub
-        uses: Kir-Antipov/mc-publish@v3.3.0
+        uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           name: "Complete ${{ENV.VERSION_TITLE}}"
           github-token: ${{ secrets.GITHUB_TOKEN }}
